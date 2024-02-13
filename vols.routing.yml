@@ -1,0 +1,23 @@
+vols.list:
+  path: '/vols'
+  defaults:
+    _controller: '\Drupal\vols\Controller\VolsController::list'
+    _title: "Liste des départs"
+  requirements:
+    _permission: "access content"
+
+vols.list_arrival:
+  path: '/vols/arrivals'
+  defaults:
+    _controller: '\Drupal\vols\Controller\VolsController::arrivals'
+    _title: "Liste des arrivés"
+  requirements:
+    _permission: "access content"
+
+vols.settings:
+  path: '/vols'
+  defaults:
+    _controller: '\Drupal\vols\Controller\VolsController::settings'
+    _title: "Paramètres vols"
+  requirements:
+    _permission: "access content"

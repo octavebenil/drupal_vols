@@ -1,0 +1,6 @@
+vols.admin:
+  title: "Paramètres module vols"
+  description: "Gestionnaire des API"
+  parent: system.admin_config_development
+  route_name: vols.list
+  weight: 100

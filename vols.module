@@ -1,0 +1,29 @@
+<?php
+/**
+ * @file
+ * Main module file with hooks implementations.
+ */
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
+
+
+/**
+ * Implements hook_theme().
+ */
+function vols_theme($existing, $type, $theme, $path) {
+  return [
+    'vols_list_template' => [
+      'variables' => [
+        'vols' => NULL,
+        'type' => 'departure'
+      ],
+    ],
+  ];
+}
+
+///**
+// * Implements template_preprocess_HOOK().
+// */
+//function template_preprocess_vols_list_template(&$variables) {
+//  \Drupal::service('vols.theme')->preprocessWeatherVariables($variables);
+//}

@@ -1,0 +1,6 @@
+name: Vols
+type: module
+description: Liste des vols (départs et arrivés)
+package: Custom
+version: 1.0
+core_version_requirement: ">=8"

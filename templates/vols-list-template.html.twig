@@ -1,0 +1,114 @@
+{% if type == 'departure' %}
+
+<h3>Liste des departs de l'aeroport de LOME TOKOIN</h3>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+        <th>Numero de vol</th>
+        <th>Destination</th>
+        <th>Companie</th>
+        <th>Date</th>
+        <th>Prevision</th>
+        <th>Depart reel</th>
+        <th>Statut</th>
+        <th></th>
+    </thead>
+
+    <tbody>
+      {% for vol in vols %}
+        <tr>
+          <td>{{ vol.flight_number }}</td>
+          <td>{{ vol.arrival.airport }}</td>
+          <td>{{ vol.company.name }}</td>
+
+
+          {% if vol.flight_date == "" %}
+            <td>{{ vol.flight_date}}</td>
+          {% else %}
+            <td>{{ vol.flight_date|date('d/m/Y')}}</td>
+          {% endif %}
+
+
+          {% if vol.arrival.scheduled == "" %}
+            <td>{{ vol.arrival.scheduled}}</td>
+          {% else %}
+            <td>{{ vol.arrival.scheduled|date('H:i')}}</td>
+          {% endif %}
+
+          {% if vol.arrival.actual == "" %}
+            <td>{{ vol.arrival.actual}}</td>
+          {% else %}
+            <td>{{ vol.arrival.actual|date('H:i')}}</td>
+          {% endif %}
+
+
+
+          <td>{{ vol.flight_status}}</td>
+          <td></td>
+        </tr>
+      {% endfor %}
+
+    </tbody>
+  </table>
+</div>
+
+{% endif %}
+
+
+{% if type == 'arrival' %}
+
+  <h3>Liste des arrives a l'aeroport de LOME TOKOIN</h3>
+
+  <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+      <th>Numero de vol</th>
+      <th>Aeroprot de depart</th>
+      <th>Companie</th>
+      <th>Date</th>
+      <th>Prevision</th>
+      <th>Arrive reel</th>
+      <th>Statut</th>
+      <th></th>
+      </thead>
+
+      <tbody>
+      {% for vol in vols %}
+        <tr>
+          <td>{{ vol.flight_number }}</td>
+          <td>{{ vol.departure.airport }}</td>
+          <td>{{ vol.company.name }}</td>
+
+          {% if vol.flight_date == "" %}
+            <td>{{ vol.flight_date}}</td>
+          {% else %}
+            <td>{{ vol.flight_date|date('d/m/Y')}}</td>
+          {% endif %}
+
+
+          {% if vol.arrival.scheduled == "" %}
+            <td>{{ vol.arrival.scheduled}}</td>
+          {% else %}
+            <td>{{ vol.arrival.scheduled|date('H:i')}}</td>
+          {% endif %}
+
+          {% if vol.arrival.actual == "" %}
+            <td>{{ vol.arrival.actual}}</td>
+          {% else %}
+            <td>{{ vol.arrival.actual|date('H:i')}}</td>
+          {% endif %}
+
+
+
+          <td>{{ vol.flight_status}}</td>
+          <td></td>
+        </tr>
+      {% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+
+{% endif %}
+
