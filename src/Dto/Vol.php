@@ -4,53 +4,190 @@ namespace Drupal\vols\Dto;
 
 class Vol
 {
-   public $flight_date;
+   protected $airlineId;
+   protected $airlineName;
+   protected $arrivalAirportCode;
+   protected $departureAirportCode;
+   protected $arrivalAirportName;
+   protected $departureAirportName;
+   protected $flightNumber;
+   protected $scheduledArrivalTime;
+   protected $localisedScheduledArrivalTime;
+   protected $estimatedArrivalTime;
+   protected $localisedEstimatedArrivalTime;
+   protected $arrivalTerminal;
+   protected $arrivalTerminalLocalised;
+   protected $scheduledDepartureTime;
+   protected $localisedScheduledDepartureTime;
+   protected $estimatedDepartureTime;
+   protected $localisedEstimatedDepartureTime;
+   protected $departureTerminal;
+   protected $departureTerminalLocalised;
+   protected $status;
+   protected $statusLocalised;
+   protected $opFlightNumber;
+   protected $arrivalGate;
+   protected $boardingGate;
+   protected $codeshares;
+   protected $codeShare;
 
-   public $flight_status;
+   protected $type;
 
-  public $flight_number;
-  public $flight_iata;
-  public $flight_icao;
-  public $aircraft;
-  public $live;
+  /**
+   * @param $airlineId
+   * @param $airlineName
+   * @param $arrivalAirportCode
+   * @param $departureAirportCode
+   * @param $arrivalAirportName
+   * @param $departureAirportName
+   * @param $flightNumber
+   * @param $scheduledArrivalTime
+   * @param $localisedScheduledArrivalTime
+   * @param $estimatedArrivalTime
+   * @param $localisedEstimatedArrivalTime
+   * @param $arrivalTerminal
+   * @param $arrivalTerminalLocalised
+   * @param $scheduledDepartureTime
+   * @param $localisedScheduledDepartureTime
+   * @param $estimatedDepartureTime
+   * @param $localisedEstimatedDepartureTime
+   * @param $departureTerminal
+   * @param $departureTerminalLocalised
+   * @param $status
+   * @param $statusLocalised
+   * @param $opFlightNumber
+   * @param $arrivalGate
+   * @param $boardingGate
+   * @param $codeshares
+   * @param $codeShare
+   * @param $type
+   */
+  public function __construct($airlineId, $airlineName, $arrivalAirportCode, $departureAirportCode, $arrivalAirportName, $departureAirportName, $flightNumber, $scheduledArrivalTime, $localisedScheduledArrivalTime, $estimatedArrivalTime, $localisedEstimatedArrivalTime, $arrivalTerminal, $arrivalTerminalLocalised, $scheduledDepartureTime, $localisedScheduledDepartureTime, $estimatedDepartureTime, $localisedEstimatedDepartureTime, $departureTerminal, $departureTerminalLocalised, $status, $statusLocalised, $opFlightNumber, $arrivalGate, $boardingGate, $codeshares, $codeShare, $type)
+  {
+    $this->airlineId = $airlineId;
+    $this->airlineName = $airlineName;
+    $this->arrivalAirportCode = $arrivalAirportCode;
+    $this->departureAirportCode = $departureAirportCode;
+    $this->arrivalAirportName = $arrivalAirportName;
+    $this->departureAirportName = $departureAirportName;
+    $this->flightNumber = $flightNumber;
+    $this->scheduledArrivalTime = $scheduledArrivalTime;
+    $this->localisedScheduledArrivalTime = $localisedScheduledArrivalTime;
+    $this->estimatedArrivalTime = $estimatedArrivalTime;
+    $this->localisedEstimatedArrivalTime = $localisedEstimatedArrivalTime;
+    $this->arrivalTerminal = $arrivalTerminal;
+    $this->arrivalTerminalLocalised = $arrivalTerminalLocalised;
+    $this->scheduledDepartureTime = $scheduledDepartureTime;
+    $this->localisedScheduledDepartureTime = $localisedScheduledDepartureTime;
+    $this->estimatedDepartureTime = $estimatedDepartureTime;
+    $this->localisedEstimatedDepartureTime = $localisedEstimatedDepartureTime;
+    $this->departureTerminal = $departureTerminal;
+    $this->departureTerminalLocalised = $departureTerminalLocalised;
+    $this->status = $status;
+    $this->statusLocalised = $statusLocalised;
+    $this->opFlightNumber = $opFlightNumber;
+    $this->arrivalGate = $arrivalGate;
+    $this->boardingGate = $boardingGate;
+    $this->codeshares = $codeshares;
+    $this->codeShare = $codeShare;
+    $this->type = $type;
+  }
 
-   public VolDetail $departure;
-   public VolDetail $arrival;
-
-   public Company $company;
-
-   public CodeShared $codeShared;
 
   /**
    * @return mixed
    */
-  public function getFlightDate()
+  public function getAirlineId()
   {
-    return $this->flight_date;
+    return $this->airlineId;
   }
 
   /**
-   * @param mixed $flight_date
+   * @param mixed $airlineId
    */
-  public function setFlightDate($flight_date): void
+  public function setAirlineId($airlineId): void
   {
-    $this->flight_date = $flight_date;
+    $this->airlineId = $airlineId;
   }
 
   /**
    * @return mixed
    */
-  public function getFlightStatus()
+  public function getAirlineName()
   {
-    return $this->flight_status;
+    return $this->airlineName;
   }
 
   /**
-   * @param mixed $flight_status
+   * @param mixed $airlineName
    */
-  public function setFlightStatus($flight_status): void
+  public function setAirlineName($airlineName): void
   {
-    $this->flight_status = $flight_status;
+    $this->airlineName = $airlineName;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getArrivalAirportCode()
+  {
+    return $this->arrivalAirportCode;
+  }
+
+  /**
+   * @param mixed $arrivalAirportCode
+   */
+  public function setArrivalAirportCode($arrivalAirportCode): void
+  {
+    $this->arrivalAirportCode = $arrivalAirportCode;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getDepartureAirportCode()
+  {
+    return $this->departureAirportCode;
+  }
+
+  /**
+   * @param mixed $departureAirportCode
+   */
+  public function setDepartureAirportCode($departureAirportCode): void
+  {
+    $this->departureAirportCode = $departureAirportCode;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getArrivalAirportName()
+  {
+    return $this->arrivalAirportName;
+  }
+
+  /**
+   * @param mixed $arrivalAirportName
+   */
+  public function setArrivalAirportName($arrivalAirportName): void
+  {
+    $this->arrivalAirportName = $arrivalAirportName;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getDepartureAirportName()
+  {
+    return $this->departureAirportName;
+  }
+
+  /**
+   * @param mixed $departureAirportName
+   */
+  public function setDepartureAirportName($departureAirportName): void
+  {
+    $this->departureAirportName = $departureAirportName;
   }
 
   /**
@@ -58,142 +195,334 @@ class Vol
    */
   public function getFlightNumber()
   {
-    return $this->flight_number;
+    return $this->flightNumber;
   }
 
   /**
-   * @param mixed $flight_number
+   * @param mixed $flightNumber
    */
-  public function setFlightNumber($flight_number): void
+  public function setFlightNumber($flightNumber): void
   {
-    $this->flight_number = $flight_number;
-  }
-
-  /**
-   * @return mixed
-   */
-  public function getFlightIata()
-  {
-    return $this->flight_iata;
-  }
-
-  /**
-   * @param mixed $flight_iata
-   */
-  public function setFlightIata($flight_iata): void
-  {
-    $this->flight_iata = $flight_iata;
+    $this->flightNumber = $flightNumber;
   }
 
   /**
    * @return mixed
    */
-  public function getFlightIcao()
+  public function getScheduledArrivalTime()
   {
-    return $this->flight_icao;
+    return $this->scheduledArrivalTime;
   }
 
   /**
-   * @param mixed $flight_icao
+   * @param mixed $scheduledArrivalTime
    */
-  public function setFlightIcao($flight_icao): void
+  public function setScheduledArrivalTime($scheduledArrivalTime): void
   {
-    $this->flight_icao = $flight_icao;
-  }
-
-  /**
-   * @return mixed
-   */
-  public function getAircraft()
-  {
-    return $this->aircraft;
-  }
-
-  /**
-   * @param mixed $aircraft
-   */
-  public function setAircraft($aircraft): void
-  {
-    $this->aircraft = $aircraft;
+    $this->scheduledArrivalTime = $scheduledArrivalTime;
   }
 
   /**
    * @return mixed
    */
-  public function getLive()
+  public function getLocalisedScheduledArrivalTime()
   {
-    return $this->live;
+    return $this->localisedScheduledArrivalTime;
   }
 
   /**
-   * @param mixed $live
+   * @param mixed $localisedScheduledArrivalTime
    */
-  public function setLive($live): void
+  public function setLocalisedScheduledArrivalTime($localisedScheduledArrivalTime): void
   {
-    $this->live = $live;
+    $this->localisedScheduledArrivalTime = $localisedScheduledArrivalTime;
   }
 
   /**
-   * @return VolDetail
+   * @return mixed
    */
-  public function getDeparture(): VolDetail
+  public function getEstimatedArrivalTime()
   {
-    return $this->departure;
+    return $this->estimatedArrivalTime;
   }
 
   /**
-   * @param VolDetail $departure
+   * @param mixed $estimatedArrivalTime
    */
-  public function setDeparture(VolDetail $departure): void
+  public function setEstimatedArrivalTime($estimatedArrivalTime): void
   {
-    $this->departure = $departure;
+    $this->estimatedArrivalTime = $estimatedArrivalTime;
   }
 
   /**
-   * @return VolDetail
+   * @return mixed
    */
-  public function getArrival(): VolDetail
+  public function getLocalisedEstimatedArrivalTime()
   {
-    return $this->arrival;
+    return $this->localisedEstimatedArrivalTime;
   }
 
   /**
-   * @param VolDetail $arrival
+   * @param mixed $localisedEstimatedArrivalTime
    */
-  public function setArrival(VolDetail $arrival): void
+  public function setLocalisedEstimatedArrivalTime($localisedEstimatedArrivalTime): void
   {
-    $this->arrival = $arrival;
+    $this->localisedEstimatedArrivalTime = $localisedEstimatedArrivalTime;
   }
 
   /**
-   * @return Company
+   * @return mixed
    */
-  public function getCompany(): Company
+  public function getArrivalTerminal()
   {
-    return $this->company;
+    return $this->arrivalTerminal;
   }
 
   /**
-   * @param Company $company
+   * @param mixed $arrivalTerminal
    */
-  public function setCompany(Company $company): void
+  public function setArrivalTerminal($arrivalTerminal): void
   {
-    $this->company = $company;
+    $this->arrivalTerminal = $arrivalTerminal;
   }
 
   /**
-   * @return CodeShared
+   * @return mixed
    */
-  public function getCodeShared(): CodeShared
+  public function getArrivalTerminalLocalised()
   {
-    return $this->codeShared;
+    return $this->arrivalTerminalLocalised;
   }
 
   /**
-   * @param CodeShared $codeShared
+   * @param mixed $arrivalTerminalLocalised
    */
-  public function setCodeShared(CodeShared $codeShared): void
+  public function setArrivalTerminalLocalised($arrivalTerminalLocalised): void
   {
-    $this->codeShared = $codeShared;
+    $this->arrivalTerminalLocalised = $arrivalTerminalLocalised;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getScheduledDepartureTime()
+  {
+    return $this->scheduledDepartureTime;
+  }
+
+  /**
+   * @param mixed $scheduledDepartureTime
+   */
+  public function setScheduledDepartureTime($scheduledDepartureTime): void
+  {
+    $this->scheduledDepartureTime = $scheduledDepartureTime;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getLocalisedScheduledDepartureTime()
+  {
+    return $this->localisedScheduledDepartureTime;
+  }
+
+  /**
+   * @param mixed $localisedScheduledDepartureTime
+   */
+  public function setLocalisedScheduledDepartureTime($localisedScheduledDepartureTime): void
+  {
+    $this->localisedScheduledDepartureTime = $localisedScheduledDepartureTime;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getEstimatedDepartureTime()
+  {
+    return $this->estimatedDepartureTime;
+  }
+
+  /**
+   * @param mixed $estimatedDepartureTime
+   */
+  public function setEstimatedDepartureTime($estimatedDepartureTime): void
+  {
+    $this->estimatedDepartureTime = $estimatedDepartureTime;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getLocalisedEstimatedDepartureTime()
+  {
+    return $this->localisedEstimatedDepartureTime;
+  }
+
+  /**
+   * @param mixed $localisedEstimatedDepartureTime
+   */
+  public function setLocalisedEstimatedDepartureTime($localisedEstimatedDepartureTime): void
+  {
+    $this->localisedEstimatedDepartureTime = $localisedEstimatedDepartureTime;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getDepartureTerminal()
+  {
+    return $this->departureTerminal;
+  }
+
+  /**
+   * @param mixed $departureTerminal
+   */
+  public function setDepartureTerminal($departureTerminal): void
+  {
+    $this->departureTerminal = $departureTerminal;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getDepartureTerminalLocalised()
+  {
+    return $this->departureTerminalLocalised;
+  }
+
+  /**
+   * @param mixed $departureTerminalLocalised
+   */
+  public function setDepartureTerminalLocalised($departureTerminalLocalised): void
+  {
+    $this->departureTerminalLocalised = $departureTerminalLocalised;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getStatus()
+  {
+    return $this->status;
+  }
+
+  /**
+   * @param mixed $status
+   */
+  public function setStatus($status): void
+  {
+    $this->status = $status;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getStatusLocalised()
+  {
+    return $this->statusLocalised;
+  }
+
+  /**
+   * @param mixed $statusLocalised
+   */
+  public function setStatusLocalised($statusLocalised): void
+  {
+    $this->statusLocalised = $statusLocalised;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getOpFlightNumber()
+  {
+    return $this->opFlightNumber;
+  }
+
+  /**
+   * @param mixed $opFlightNumber
+   */
+  public function setOpFlightNumber($opFlightNumber): void
+  {
+    $this->opFlightNumber = $opFlightNumber;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getArrivalGate()
+  {
+    return $this->arrivalGate;
+  }
+
+  /**
+   * @param mixed $arrivalGate
+   */
+  public function setArrivalGate($arrivalGate): void
+  {
+    $this->arrivalGate = $arrivalGate;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getBoardingGate()
+  {
+    return $this->boardingGate;
+  }
+
+  /**
+   * @param mixed $boardingGate
+   */
+  public function setBoardingGate($boardingGate): void
+  {
+    $this->boardingGate = $boardingGate;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getCodeshares()
+  {
+    return $this->codeshares;
+  }
+
+  /**
+   * @param mixed $codeshares
+   */
+  public function setCodeshares($codeshares): void
+  {
+    $this->codeshares = $codeshares;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getCodeShare()
+  {
+    return $this->codeShare;
+  }
+
+  /**
+   * @param mixed $codeShare
+   */
+  public function setCodeShare($codeShare): void
+  {
+    $this->codeShare = $codeShare;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getType()
+  {
+    return $this->type;
+  }
+
+  /**
+   * @param mixed $type
+   */
+  public function setType($type): void
+  {
+    $this->type = $type;
   }
 }

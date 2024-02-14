@@ -1,5 +1,5 @@
 vols.list:
-  path: '/vols'
+  path: '/vols/departures'
   defaults:
     _controller: '\Drupal\vols\Controller\VolsController::list'
     _title: "Liste des départs"
@@ -10,7 +10,7 @@ vols.list_arrival:
   path: '/vols/arrivals'
   defaults:
     _controller: '\Drupal\vols\Controller\VolsController::arrivals'
-    _title: "Liste des arrivés"
+    _title: "Liste des arrivées"
   requirements:
     _permission: "access content"
 

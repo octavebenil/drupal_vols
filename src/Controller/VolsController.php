@@ -1,42 +1,25 @@
 <?php
+
 namespace Drupal\vols\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\vols\Dto\CodeShared;
-use Drupal\vols\Dto\Company;
 use Drupal\vols\Dto\Vol;
-use Drupal\vols\Dto\VolDetail;
-use const Drupal\vols\Dto\ARRIVAL;
-use const Drupal\vols\Dto\DEPARTURE;
 
-class VolsController extends ControllerBase {
+define("DEPARTURE", "departure");
+define("ARRIVAL", "arrival");
+class VolsController extends ControllerBase
+{
 
-  protected $access_key;
+  private $lome_iata = "lfw"; //code IATA de l'aeroport de Lomé
+  private $niamtougou_iata = "lrl"; //code IATA de l'aeroport de Niamtougou
 
-  protected $base_url;
-
-  private $lome_icao = "DXXX"; //code ICAO de l'aeroport de Lomé
-  private $niamtougou_icao = "DXNG"; //code ICAO de l'aeroport de Niamtougou
-
-  //fitre par aeroport d'arrive
-//http://api.aviationstack.com/v1/flights?arr_icao=DXXX&access_key=9a0b25c55df5b02fccc981af8d7f6ebb
-
-  //filtre par aeroport de depart
-//http://api.aviationstack.com/v1/flights?dep_icao=DXXX&access_key=9a0b25c55df5b02fccc981af8d7f6ebb
-
-
-  public function __construct(){
-    $this->access_key = "9a0b25c55df5b02fccc981af8d7f6ebb";
-
-    $this->base_url = "http://api.aviationstack.com/v1";
-  }
-
-  protected function process_vols($url){
+  protected function process_vols($url, $type, $today_only=true)
+  {
 
     $client = \Drupal::httpClient();
 
 
-    $batch_vols = $client->get($url,[
+    $batch_vols = $client->get($url, [
       'headers' => [
         'Accept' => 'application/json',
         'Content-Type' => 'application/json'
@@ -47,74 +30,63 @@ class VolsController extends ControllerBase {
 
     $vols = [];
 
-    if(!empty($batch_vols)){
-      foreach ($batch_vols->data as $data){
-        $vol = new Vol();
+    if (!empty($batch_vols)) {
 
-        $vol->setFlightDate($data->flight_date);
-        $vol->setFlightStatus($data->flight_status);
-        $vol->setAircraft($data->aircraft);
-        $vol->setLive($data->live);
-        $vol->setFlightNumber($data->flight->number);
-        $vol->setFlightIata($data->flight->iata);
-        $vol->setFlightIcao($data->flight->icao);
+      $datas = [];
 
-        $depart = new VolDetail(
-          $data->departure->airport,
-          $data->departure->timezone,
-          $data->departure->iata,
-          $data->departure->icao,
-          $data->departure->terminal,
-          $data->departure->gate,
-          $data->departure->delay,
-          $data->departure->scheduled,
-          $data->departure->estimated,
-          $data->departure->actual,
-          $data->departure->estimated_runway,
-          $data->departure->actual_runway,
-          DEPARTURE
+      if ($type == DEPARTURE) {
+        $datas = $batch_vols->departures;
+      } else {
+        $datas = $batch_vols->arrivals;
+      }
+
+
+      $today_time = time();
+
+      foreach ($datas as $data) {
+
+        if($today_only){
+
+          if ($type == DEPARTURE) {
+            $date = $data->scheduledDepartureTime;
+          } else {
+            $date = $data->scheduledArrivalTime;
+          }
+
+          //on ignore les autres date
+
+//          if(date("d-m-Y", $today_time) != date("d-m-Y", strtotime($date))) continue;
+        }
+
+        $vol = new Vol(
+          $data->airlineId,
+          $data->airlineName,
+          $data->arrivalAirportCode,
+          $data->departureAirportCode,
+          $data->arrivalAirportName,
+          $data->departureAirportName,
+          $data->flightNumber,
+          $data->scheduledArrivalTime,
+          $data->localisedScheduledArrivalTime,
+          $data->estimatedArrivalTime,
+          $data->localisedEstimatedArrivalTime,
+          $data->arrivalTerminal,
+          $data->arrivalTerminalLocalised,
+          $data->scheduledDepartureTime,
+          $data->localisedScheduledDepartureTime,
+          $data->estimatedDepartureTime,
+          $data->localisedEstimatedDepartureTime,
+          $data->departureTerminal,
+          $data->departureTerminalLocalised,
+          $data->status,
+          $data->statusLocalised,
+          $data->opFlightNumber,
+          $data->arrivalGate,
+          $data->boardingGate,
+          $data->codeshares,
+          $data->codeShare,
+          $type
         );
-
-
-        $arrive = new VolDetail(
-          $data->arrival->airport,
-          $data->arrival->timezone,
-          $data->arrival->iata,
-          $data->arrival->icao,
-          $data->arrival->terminal,
-          $data->arrival->gate,
-          $data->arrival->delay,
-          $data->arrival->scheduled,
-          $data->arrival->estimated,
-          $data->arrival->actual,
-          $data->arrival->estimated_runway,
-          $data->arrival->actual_runway,
-          ARRIVAL
-        );
-
-        $vol->setDeparture($depart);
-        $vol->setArrival($arrive);
-
-
-        $company = new Company(
-          $data->airline->name,
-          $data->airline->iata,
-          $data->airline->icao
-        );
-
-        $vol->setCompany($company);
-
-//        $codeshared = new CodeShared(
-//          $data->flight->codeshared->airline_name,
-//          $data->flight->codeshared->airline_iata,
-//          $data->flight->codeshared->airline_icao,
-//          $data->flight->codeshared->flight_number,
-//          $data->flight->codeshared->flight_iata,
-//          $data->flight->codeshared->flight_icao
-//        );
-//
-//        $vol->setCodeShared($codeshared);
-
         $vols[] = $vol;
 
       }
@@ -123,35 +95,42 @@ class VolsController extends ControllerBase {
     return $vols;
   }
 
-  public function list(){
+  public function list()
+  {
 
-    $url = $this->base_url."/flights?dep_icao=$this->lome_icao&access_key=".$this->access_key;
+    $iata = $this->lome_iata;
 
-    $vols = $this->process_vols($url);
+    $url = "https://www.skyscanner.fr/g/arrival-departure-svc/api/airports/$iata/departures?locale=en-GB";
+
+    $vols = $this->process_vols($url, DEPARTURE);
 
     return [
       '#theme' => 'vols_list_template',
-      '#type' => 'departure',
+      '#type' => DEPARTURE,
       '#vols' => $vols
     ];
   }
 
 
-  public function arrivals(){
+  public function arrivals()
+  {
 
-    $url = $this->base_url."/flights?arr_icao=$this->lome_icao&access_key=".$this->access_key;
+    $iata = $this->lome_iata;
 
-    $vols = $this->process_vols($url);
+    $url = "https://www.skyscanner.fr/g/arrival-departure-svc/api/airports/$iata/arrivals?locale=en-GB";
+
+    $vols = $this->process_vols($url, ARRIVAL);
 
     return [
       '#theme' => 'vols_list_template',
-      '#type' => 'arrival',
+      '#type' => ARRIVAL,
       '#vols' => $vols
     ];
   }
 
 
-  public function settings(){
+  public function settings()
+  {
     return [
       '#type' => 'markup',
       '#markup' => $this->t('Settings!'),
