@@ -71,25 +71,33 @@ class Vol
     $this->arrivalAirportName = $arrivalAirportName;
     $this->departureAirportName = $departureAirportName;
     $this->flightNumber = $flightNumber;
+
     $this->scheduledArrivalTime = $scheduledArrivalTime;
     $this->localisedScheduledArrivalTime = $localisedScheduledArrivalTime;
     $this->estimatedArrivalTime = $estimatedArrivalTime;
     $this->localisedEstimatedArrivalTime = $localisedEstimatedArrivalTime;
+
+
     $this->arrivalTerminal = $arrivalTerminal;
     $this->arrivalTerminalLocalised = $arrivalTerminalLocalised;
+
     $this->scheduledDepartureTime = $scheduledDepartureTime;
     $this->localisedScheduledDepartureTime = $localisedScheduledDepartureTime;
     $this->estimatedDepartureTime = $estimatedDepartureTime;
     $this->localisedEstimatedDepartureTime = $localisedEstimatedDepartureTime;
+
     $this->departureTerminal = $departureTerminal;
     $this->departureTerminalLocalised = $departureTerminalLocalised;
+
     $this->status = $status;
     $this->statusLocalised = $statusLocalised;
     $this->opFlightNumber = $opFlightNumber;
+
     $this->arrivalGate = $arrivalGate;
     $this->boardingGate = $boardingGate;
     $this->codeshares = $codeshares;
     $this->codeShare = $codeShare;
+
     $this->type = $type;
   }
 

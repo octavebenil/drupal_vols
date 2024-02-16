@@ -2,16 +2,42 @@
 
 namespace Drupal\vols\Controller;
 
-use Drupal\Core\Controller\ControllerBase;
-use Drupal\vols\Dto\Vol;
 
-define("DEPARTURE", "departure");
-define("ARRIVAL", "arrival");
+use Drupal\Core\Controller\ControllerBase;
+use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
+use Drupal\vols\Utils\Constant;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+
+use Drupal\vols\Dto\Vol;
 class VolsController extends ControllerBase
 {
 
   private $lome_iata = "lfw"; //code IATA de l'aeroport de Lomé
   private $niamtougou_iata = "lrl"; //code IATA de l'aeroport de Niamtougou
+
+
+  /**
+   * Page cache kill switch.
+   *
+   * @var \Drupal\Core\PageCache\ResponsePolicy\KillSwitch
+   */
+  protected $killSwitch;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(KillSwitch $kill_switch) {
+    $this->killSwitch = $kill_switch;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('page_cache_kill_switch')
+    );
+  }
 
   protected function process_vols($url, $type, $today_only=true)
   {
@@ -34,7 +60,7 @@ class VolsController extends ControllerBase
 
       $datas = [];
 
-      if ($type == DEPARTURE) {
+      if ($type == Constant::$DEPARTURE) {
         $datas = $batch_vols->departures;
       } else {
         $datas = $batch_vols->arrivals;
@@ -47,7 +73,7 @@ class VolsController extends ControllerBase
 
         if($today_only){
 
-          if ($type == DEPARTURE) {
+          if ($type == Constant::$DEPARTURE) {
             $date = $data->scheduledDepartureTime;
           } else {
             $date = $data->scheduledArrivalTime;
@@ -97,16 +123,17 @@ class VolsController extends ControllerBase
 
   public function list()
   {
+    $this->killSwitch->trigger();
 
     $iata = $this->lome_iata;
 
     $url = "https://www.skyscanner.fr/g/arrival-departure-svc/api/airports/$iata/departures?locale=en-GB";
 
-    $vols = $this->process_vols($url, DEPARTURE);
+    $vols = $this->process_vols($url, Constant::$DEPARTURE);
 
     return [
       '#theme' => 'vols_list_template',
-      '#type' => DEPARTURE,
+      '#type' => Constant::$DEPARTURE,
       '#vols' => $vols
     ];
   }
@@ -114,16 +141,16 @@ class VolsController extends ControllerBase
 
   public function arrivals()
   {
-
+    $this->killSwitch->trigger();
     $iata = $this->lome_iata;
 
     $url = "https://www.skyscanner.fr/g/arrival-departure-svc/api/airports/$iata/arrivals?locale=en-GB";
 
-    $vols = $this->process_vols($url, ARRIVAL);
+    $vols = $this->process_vols($url, Constant::$ARRIVAL);
 
     return [
       '#theme' => 'vols_list_template',
-      '#type' => ARRIVAL,
+      '#type' => Constant::$ARRIVAL,
       '#vols' => $vols
     ];
   }
