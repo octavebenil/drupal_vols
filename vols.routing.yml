@@ -15,9 +15,25 @@ vols.list_arrival:
     _permission: "access content"
 
 vols.settings:
-  path: '/vols'
+  path: '/admin/vols/list'
   defaults:
-    _controller: '\Drupal\vols\Controller\VolsController::settings'
-    _title: "Paramètres vols"
+    _controller: '\Drupal\vols\Controller\Admin\AdminVolsController::list'
+    _title: "Paramètres des vols"
   requirements:
-    _permission: "access content"
+    _permission: "administer vols"
+
+vols.status_vols:
+  path: '/admin/vols/status/list'
+  defaults:
+    _controller: '\Drupal\vols\Controller\Admin\StatusController::list'
+    _title: "Statuts des vols"
+  requirements:
+    _permission: "administer vols"
+
+vols.status_vols_form:
+  path: '/admin/vols/status/form'
+  defaults:
+    _form: '\Drupal\vols\Form\StatusCreateUpdateForm'
+    _title: 'Ajouter/Modifier un status'
+  requirements:
+    _permission: 'administer vols'

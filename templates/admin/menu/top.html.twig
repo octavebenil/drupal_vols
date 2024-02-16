@@ -1,0 +1,16 @@
+<nav class="top-nav">
+  <h4 class="menu-title">MENU</h4>
+  <div class="menu-sep"></div>
+
+  <ul class="nav-list">
+
+    <li class="nav-item {{ path('vols.settings') ==  path('<current>') ? 'active'}}">
+      <a class="nav-link" href="{{ path('vols.settings') }}">Vols</a>
+    </li>
+
+    <li class="nav-item {{ path('vols.status_vols') ==  path('<current>') ? 'active' }}">
+      <a class="nav-link" href="{{ path('vols.status_vols') }}">Statuts</a>
+    </li>
+
+  </ul>
+</nav>

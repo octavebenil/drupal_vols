@@ -1,0 +1,79 @@
+{% if type == 'departure' %}
+    <h3>Liste des départs de l'Aéroport de LOME TOKOIN</h3>
+{% else %}
+    <h3>Liste des arrivées à l'Aéroport de LOME TOKOIN</h3>
+{% endif %}
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+        <th>N° de vol</th>
+        <th>Compagnie</th>
+        <th>Jour</th>
+        <th>Horaire</th>
+
+        {% if type == 'departure' %}
+          <th>Destination</th>
+        {% else %}
+          <th>Provenance</th>
+        {% endif %}
+
+        <th>Statut</th>
+        <th></th>
+    </thead>
+
+    <tbody>
+      {% if vols %}
+        {% for vol in vols %}
+          <tr>
+            <td>{{ vol.flightNumber }}</td>
+            <td>{{ vol.airlineName }}</td>
+
+            {% if type == 'departure' %}
+
+              {% if vol.scheduledDepartureTime == "" %}
+                <td>{{ vol.scheduledDepartureTime}}</td>
+              {% else %}
+                <td>{{ vol.scheduledDepartureTime|date('d/m/Y')}}</td>
+              {% endif %}
+
+
+              {% if vol.scheduledDepartureTime == "" %}
+                <td>{{ vol.scheduledDepartureTime}}</td>
+              {% else %}
+                <td>{{ vol.scheduledDepartureTime|date('H:i')}}</td>
+              {% endif %}
+
+              <td>{{ vol.arrivalAirportName}}</td>
+
+            {% else %}
+
+              {% if vol.scheduledArrivalTime == "" %}
+                <td>{{ vol.scheduledArrivalTime}}</td>
+              {% else %}
+                <td>{{ vol.scheduledArrivalTime|date('d/m/Y')}}</td>
+              {% endif %}
+
+
+              {% if vol.scheduledArrivalTime == "" %}
+                <td>{{ vol.scheduledArrivalTime}}</td>
+              {% else %}
+                <td>{{ vol.scheduledArrivalTime|date('H:i')}}</td>
+              {% endif %}
+
+              <td>{{ vol.departureAirportName}}</td>
+
+            {% endif %}
+
+
+            <td>{{ vol.status}}</td>
+            <td></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <td colspan="7">Tous les vols ont été achevés pour aujourd'hui.</td>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+

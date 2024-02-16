@@ -1,0 +1,4 @@
+services:
+  vols.crud_service:
+    class: Drupal\vols\Service\EntityCRUDService
+    arguments: ['@entity_type.manager']

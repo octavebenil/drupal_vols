@@ -1,25 +1,11 @@
-<style>
-  table{
-    width: 100%;
-    text-align:left;
-    border-collapse: collapse;
-    line-height: 4.5em;
-  }
+{% include 'modules/custom/vols/templates/admin/menu/top.html.twig' %}
 
-  th{
-    text-transform: uppercase;
-  }
-
-  tr, td{
-    border-bottom: 1px solid darkgray;
-  }
-</style>
-
-{% if type == 'departure' %}
-    <h3>Liste des départs de l'Aéroport de LOME TOKOIN</h3>
-{% else %}
-    <h3>Liste des arrivées à l'Aéroport de LOME TOKOIN</h3>
-{% endif %}
+<div class="title">
+  <h3>Liste des vols</h3>
+  <span style="float: right;">
+    <a href="#">Ajouter</a>
+  </span>
+</div>
 
 <div class="table-responsive">
   <table class="table table-hover">
@@ -29,14 +15,11 @@
         <th>Jour</th>
         <th>Horaire</th>
 
-        {% if type == 'departure' %}
-          <th>Destination</th>
-        {% else %}
-          <th>Provenance</th>
-        {% endif %}
+        <th>Destination</th>
+        <th>Provenance</th>
 
         <th>Statut</th>
-        <th></th>
+        <th>Action</th>
     </thead>
 
     <tbody>
@@ -62,6 +45,7 @@
               {% endif %}
 
               <td>{{ vol.arrivalAirportName}}</td>
+              <td>{{ vol.departureAirportName}}</td>
 
             {% else %}
 
@@ -88,7 +72,7 @@
           </tr>
         {% endfor %}
       {% else %}
-        <td colspan="7">Tous les vols ont été achevés pour aujourd'hui.</td>
+        <td colspan="8">Aucun vols</td>
       {% endif %}
     </tbody>
   </table>

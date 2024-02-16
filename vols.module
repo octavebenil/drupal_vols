@@ -12,18 +12,55 @@ use Drupal\Core\Url;
  */
 function vols_theme($existing, $type, $theme, $path) {
   return [
-    'vols_list_template' => [
+    'front_vols_list' => [
       'variables' => [
         'vols' => NULL,
         'type' => 'departure'
       ],
+      'template' => 'front/vols-list',
     ],
+
+    'admin_vols_list' => [
+      'variables' => [
+        'vols' => NULL
+      ],
+      'template' => 'admin/vols/list',
+    ],
+
+    'admin_status_list' => [
+      'variables' => [
+        'status' => NULL
+      ],
+      'template' => 'admin/status/list',
+    ],
+
   ];
 }
 
-///**
-// * Implements template_preprocess_HOOK().
-// */
-//function template_preprocess_vols_list_template(&$variables) {
-//  \Drupal::service('vols.theme')->preprocessWeatherVariables($variables);
-//}
+/**
+ * Implements hook_library_info().
+ */
+function vols_library_info() {
+  $libraries = [];
+
+  $libraries['vols/custom'] = [
+    'title' => 'Custom CSS and JavaScript',
+    'version' => '1.0',
+    'css' => [
+      'assets/css/vols.css' => [],
+    ],
+    'js' => [
+      'assets/js/vols.js' => [],
+    ],
+  ];
+
+  return $libraries;
+}
+
+/**
+ * Implements hook_page_attachments().
+ */
+function vols_page_attachments(array &$attachments) {
+  // Attache le fichier CSS et js personnalisé à chaque page.
+  $attachments['#attached']['library'][] = 'vols/custom';
+}

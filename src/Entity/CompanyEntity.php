@@ -13,7 +13,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
  * @ingroup vol
  *
  * @ContentEntityType(
- *   id = "comapny",
+ *   id = "company",
  *   label = @Translation("Compagnies"),
  *   description = @Translation("Liste des compagnies"),
  *   base_table = "companies",

@@ -1,0 +1,36 @@
+{% include 'modules/custom/vols/templates/admin/menu/top.html.twig' %}
+
+<div class="title">
+  <h3>Liste des statuts</h3>
+  <span style="float: right;">
+    <a href="{{ path('vols.status_vols_form') }}">Ajouter</a>
+  </span>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <thead>
+        <th>#</th>
+        <th>Code</th>
+        <th>Nom</th>
+
+        <th>Action</th>
+    </thead>
+
+    <tbody>
+      {% if status %}
+        {% for item in status %}
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.code }}</td>
+            <td>{{ item.name }}</td>
+            <td></td>
+          </tr>
+        {% endfor %}
+      {% else %}
+        <td colspan="4">Aucun enregistrement</td>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+

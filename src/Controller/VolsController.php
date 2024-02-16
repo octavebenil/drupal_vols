@@ -132,7 +132,7 @@ class VolsController extends ControllerBase
     $vols = $this->process_vols($url, Constant::$DEPARTURE);
 
     return [
-      '#theme' => 'vols_list_template',
+      '#theme' => 'front_vols_list',
       '#type' => Constant::$DEPARTURE,
       '#vols' => $vols
     ];
@@ -149,7 +149,7 @@ class VolsController extends ControllerBase
     $vols = $this->process_vols($url, Constant::$ARRIVAL);
 
     return [
-      '#theme' => 'vols_list_template',
+      '#theme' => 'front_vols_list',
       '#type' => Constant::$ARRIVAL,
       '#vols' => $vols
     ];
