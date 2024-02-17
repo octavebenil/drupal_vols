@@ -45,7 +45,8 @@ class CompanyEntity extends ContentEntityBase implements ContentEntityInterface 
       ->setLabel(t('Code (IATA) de la companie'))
       ->setRequired(TRUE)
       ->setDescription('Identifiant de la compagnie')
-      ->setSetting('max_length', 190);
+      ->setSetting('max_length', 190)
+      ->addConstraint('UniqueField');
 
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Nom de la compagnie'))
@@ -56,6 +57,8 @@ class CompanyEntity extends ContentEntityBase implements ContentEntityInterface 
 
     $fields['photo'] =  BaseFieldDefinition::create('file')
       ->setLabel('Logo de la compagnie')
+      ->setDescription("Logo pour identifier la compagnie")
+      ->setRequired(FALSE)
       ->setSettings([
         'uri_scheme' => 'public',
         'file_directory' => 'companies_logo',

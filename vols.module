@@ -20,18 +20,84 @@ function vols_theme($existing, $type, $theme, $path) {
       'template' => 'front/vols-list',
     ],
 
-    'admin_vols_list' => [
-      'variables' => [
-        'vols' => NULL
-      ],
-      'template' => 'admin/vols/list',
-    ],
 
     'admin_status_list' => [
       'variables' => [
-        'status' => NULL
+        'items' => NULL,
+        "total_row" => 0,
+        "total_item" => 0,
+        "page" => 0,
+        "limit" => 15,
+        "nbre_page" => 1,
       ],
       'template' => 'admin/status/list',
+    ],
+
+    'admin_status_view' => [
+      'variables' => [
+        'status' => NULL
+      ],
+      'template' => 'admin/status/view',
+    ],
+
+
+    'admin_airport_list' => [
+      'variables' => [
+        'items' => NULL,
+        "total_row" => 0,
+        "total_item" => 0,
+        "page" => 0,
+        "limit" => 15,
+        "nbre_page" => 1,
+      ],
+      'template' => 'admin/airport/list',
+    ],
+
+    'admin_airport_view' => [
+      'variables' => [
+        'airport' => NULL
+      ],
+      'template' => 'admin/airport/view',
+    ],
+
+
+    'admin_company_list' => [
+      'variables' => [
+        'items' => NULL,
+        "total_row" => 0,
+        "total_item" => 0,
+        "page" => 0,
+        "limit" => 15,
+        "nbre_page" => 1,
+      ],
+      'template' => 'admin/company/list',
+    ],
+
+    'admin_company_view' => [
+      'variables' => [
+        'company' => NULL
+      ],
+      'template' => 'admin/company/view',
+    ],
+
+
+    'admin_vol_list' => [
+      'variables' => [
+        'items' => NULL,
+        "total_row" => 0,
+        "total_item" => 0,
+        "page" => 0,
+        "limit" => 15,
+        "nbre_page" => 1,
+      ],
+      'template' => 'admin/vol/list',
+    ],
+
+    'admin_vol_view' => [
+      'variables' => [
+        'vol' => NULL
+      ],
+      'template' => 'admin/vol/view',
     ],
 
   ];

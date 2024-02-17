@@ -40,7 +40,8 @@ class StatusEntity extends ContentEntityBase implements ContentEntityInterface {
       ->setLabel(t('Code'))
       ->setRequired(TRUE)
       ->setDescription('Code de la statut')
-      ->setSetting('max_length', 190);
+      ->setSetting('max_length', 190)
+      ->addConstraint('UniqueField');
 
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Nom'))

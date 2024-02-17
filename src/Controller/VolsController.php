@@ -5,7 +5,10 @@ namespace Drupal\vols\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
+use Drupal\vols\Service\EntityCRUDService;
+use Drupal\vols\Service\SkyScannerService;
 use Drupal\vols\Utils\Constant;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use Drupal\vols\Dto\Vol;
@@ -23,11 +26,21 @@ class VolsController extends ControllerBase
    */
   protected $killSwitch;
 
+  protected $skyScannerService;
+
+  protected $entityCRUDService;
+
   /**
    * {@inheritdoc}
    */
-  public function __construct(KillSwitch $kill_switch) {
+  public function __construct(KillSwitch $kill_switch,
+                              SkyScannerService $skyScannerService,
+                              EntityCRUDService $entityCRUDService) {
     $this->killSwitch = $kill_switch;
+
+    $this->skyScannerService = $skyScannerService;
+
+    $this->entityCRUDService = $entityCRUDService;
   }
 
   /**
@@ -35,101 +48,31 @@ class VolsController extends ControllerBase
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('page_cache_kill_switch')
+      $container->get('page_cache_kill_switch'),
+      $container->get('vols.skyscanner_service'),
+      $container->get('vols.crud_service'),
     );
   }
 
-  protected function process_vols($url, $type, $today_only=true)
-  {
-
-    $client = \Drupal::httpClient();
-
-
-    $batch_vols = $client->get($url, [
-      'headers' => [
-        'Accept' => 'application/json',
-        'Content-Type' => 'application/json'
-      ],
-    ])->getBody();
-
-    $batch_vols = json_decode($batch_vols);
-
-    $vols = [];
-
-    if (!empty($batch_vols)) {
-
-      $datas = [];
-
-      if ($type == Constant::$DEPARTURE) {
-        $datas = $batch_vols->departures;
-      } else {
-        $datas = $batch_vols->arrivals;
-      }
-
-
-      $today_time = time();
-
-      foreach ($datas as $data) {
-
-        if($today_only){
-
-          if ($type == Constant::$DEPARTURE) {
-            $date = $data->scheduledDepartureTime;
-          } else {
-            $date = $data->scheduledArrivalTime;
-          }
-
-          //on ignore les autres date
-
-//          if(date("d-m-Y", $today_time) != date("d-m-Y", strtotime($date))) continue;
-        }
-
-        $vol = new Vol(
-          $data->airlineId,
-          $data->airlineName,
-          $data->arrivalAirportCode,
-          $data->departureAirportCode,
-          $data->arrivalAirportName,
-          $data->departureAirportName,
-          $data->flightNumber,
-          $data->scheduledArrivalTime,
-          $data->localisedScheduledArrivalTime,
-          $data->estimatedArrivalTime,
-          $data->localisedEstimatedArrivalTime,
-          $data->arrivalTerminal,
-          $data->arrivalTerminalLocalised,
-          $data->scheduledDepartureTime,
-          $data->localisedScheduledDepartureTime,
-          $data->estimatedDepartureTime,
-          $data->localisedEstimatedDepartureTime,
-          $data->departureTerminal,
-          $data->departureTerminalLocalised,
-          $data->status,
-          $data->statusLocalised,
-          $data->opFlightNumber,
-          $data->arrivalGate,
-          $data->boardingGate,
-          $data->codeshares,
-          $data->codeShare,
-          $type
-        );
-        $vols[] = $vol;
-
-      }
-    }
-
-    return $vols;
-  }
-
-  public function list()
+  public function list(Request $request)
   {
     $this->killSwitch->trigger();
 
     $iata = $this->lome_iata;
 
-    $url = "https://www.skyscanner.fr/g/arrival-departure-svc/api/airports/$iata/departures?locale=en-GB";
+    $page = $request->query->get("page", 1);
+    $limit = 15;
 
-    $vols = $this->process_vols($url, Constant::$DEPARTURE);
+    $old_limit = $limit;
+
+    $start = ($page == 1) ? 0 : $limit;
+    $limit = $start + $limit;
+
+    $this->skyScannerService->syncVolEntity($iata, Constant::$DEPARTURE);
+
+    $vols = $this->entityCRUDService->getVolsByProperties("vols", array(
+      "type" => Constant::$DEPARTURE
+    ), $start, $limit);
 
     return [
       '#theme' => 'front_vols_list',
@@ -139,14 +82,24 @@ class VolsController extends ControllerBase
   }
 
 
-  public function arrivals()
+  public function arrivals(Request $request)
   {
     $this->killSwitch->trigger();
     $iata = $this->lome_iata;
 
-    $url = "https://www.skyscanner.fr/g/arrival-departure-svc/api/airports/$iata/arrivals?locale=en-GB";
+    $page = $request->query->get("page", 1);
+    $limit = 15;
 
-    $vols = $this->process_vols($url, Constant::$ARRIVAL);
+    $old_limit = $limit;
+
+    $start = ($page == 1) ? 0 : $limit;
+    $limit = $start + $limit;
+
+    $this->skyScannerService->syncVolEntity($iata, Constant::$ARRIVAL);
+
+    $vols = $this->entityCRUDService->getVolsByProperties("vols", array(
+      "type" => Constant::$ARRIVAL
+    ), $start, $limit);
 
     return [
       '#theme' => 'front_vols_list',

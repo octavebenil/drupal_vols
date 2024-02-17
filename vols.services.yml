@@ -2,3 +2,7 @@ services:
   vols.crud_service:
     class: Drupal\vols\Service\EntityCRUDService
     arguments: ['@entity_type.manager']
+
+  vols.skyscanner_service:
+    class: Drupal\vols\Service\SkyScannerService
+    arguments: [ '@entity_type.manager', '@vols.crud_service']

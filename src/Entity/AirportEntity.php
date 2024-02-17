@@ -41,7 +41,8 @@ class AirportEntity extends ContentEntityBase implements ContentEntityInterface 
       ->setLabel(t('Code (IATA)'))
       ->setRequired(TRUE)
       ->setDescription('Code de l\'aeroport')
-      ->setSetting('max_length', 190);
+      ->setSetting('max_length', 190)
+      ->addConstraint('UniqueField');
 
     $fields['name'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Nom de l\'aeroport'))

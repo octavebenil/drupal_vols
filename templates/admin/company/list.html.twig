@@ -1,9 +1,9 @@
 {% include 'modules/custom/vols/templates/admin/menu/top.html.twig' %}
 
 <div class="title">
-  <h3>Liste des statuts</h3>
+  <h3>Liste des compagnies</h3>
   <span style="float: right;">
-    <a class="btn btn-primary" href="{{ path('vols.create_status_vols_form', {"entity_id": "status", "entity_list": "status_vols"}) }}">Ajouter</a>
+    <a class="btn btn-primary" href="{{ path('vols.create_company_form', {"entity_id": "company", "entity_list": "company_list"}) }}">Ajouter</a>
   </span>
 </div>
 
@@ -25,13 +25,13 @@
             <td>{{ item.code }}</td>
             <td>{{ item.name }}</td>
             <td>
-              <a href="{{ path("vols.view_status_vols_form", {"id": item.id}  ) }}" class="btn btn-info btn-sm"> Voir</a>
+              <a href="{{ path("vols.view_company_form", {"id": item.id}  ) }}" class="btn btn-info btn-sm"> Voir</a>
 
-              <a href="{{ path("vols.update_status_vols_form", {"id": item.id, "entity_id": "status", "entity_list": "status_vols"}  ) }}" class="btn btn-warning btn-sm"> Modifier</a>
+              <a href="{{ path("vols.update_company_form", {"id": item.id, "entity_id": "company", "entity_list": "company_list"}  ) }}" class="btn btn-warning btn-sm"> Modifier</a>
 
               <button onclick="deleteEntity({{ item.id }});" class="delete-entity-button btn btn-danger btn-sm"> Supprimer</button>
 
-              <form action="{{ path("vols.delete_status_vols_form", {"id": item.id}  ) }}" id="delete_form-{{ item.id }}" method="POST"></form>
+              <form action="{{ path("vols.delete_company_form", {"id": item.id}  ) }}" id="delete_form-{{ item.id }}" method="POST"></form>
 
             </td>
           </tr>
@@ -49,9 +49,9 @@
     <ul style="float: right" id="border-pagination">
       {% for item_page in range(1, nbre_page) %}
         {% if item_page == page %}
-            <li><a href="{{ path('vols.status_vols', {"page": item_page}) }}" class="active">{{ item_page }}</a></li>
+            <li><a href="{{ path('vols.company_list', {"page": item_page}) }}" class="active">{{ item_page }}</a></li>
         {% else %}
-          <li><a href="{{ path('vols.status_vols', {"page": item_page}) }}">{{ item_page }}</a></li>
+          <li><a href="{{ path('vols.company_list', {"page": item_page}) }}">{{ item_page }}</a></li>
         {% endif%}
 
       {% endfor %}

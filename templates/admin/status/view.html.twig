@@ -1,0 +1,32 @@
+<div class="title">
+  <span style="float: right;">
+    <a class="btn btn-primary" href="{{ path('vols.status_vols') }}">Retour</a>
+  </span>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-hover">
+    <tbody>
+        <tr>
+          <td>ID</td><td> : </td><td>{{ status.id }}</td>
+        </tr>
+        <tr>
+          <td>CODE</td><td> : </td><td>{{ status.code }}</td>
+        </tr>
+
+        <tr>
+          <td>NOM</td><td> : </td><td>{{ status.name }}</td>
+        </tr>
+
+        <tr>
+          <td>Ajouter le</td><td> : </td><td>{{ status.created_at|date('d/m/Y H:i:s') }}</td>
+        </tr>
+
+
+        <tr>
+          <td>Modifier le</td><td> : </td><td>{{ status.updated_at|date('d/m/Y H:i:s') }}</td>
+        </tr>
+
+    </tbody>
+  </table>
+</div>

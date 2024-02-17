@@ -11,16 +11,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
-class StatusController extends ControllerBase
+class AirportController extends ControllerBase
 {
 
   protected $entityCRUDService;
 
   protected $killSwitch;
 
-  protected $tables = "status_vols";
+  protected $tables = "airports";
 
-  protected $entity_type_id = "status";
+  protected $entity_type_id = "airport";
 
   public function __construct(EntityCRUDService $entityCRUDService, KillSwitch $kill_switch){
     $this->entityCRUDService = $entityCRUDService;
@@ -46,19 +46,19 @@ class StatusController extends ControllerBase
     $start = ($page == 1) ? 0 : $limit;
     $limit = $start + $limit;
 
-    $status = $this->entityCRUDService->getEntities($this->tables, $start, $limit);
+    $airport = $this->entityCRUDService->getEntities($this->tables, $start, $limit);
 
-    $total_status = $this->entityCRUDService->countEntities($this->entity_type_id);
+    $total_airport = $this->entityCRUDService->countEntities($this->entity_type_id);
 
-    $nbre_page = floor($total_status/$old_limit);
+    $nbre_page = floor($total_airport/$old_limit);
 
     $nbre_page = ($nbre_page > 0 ) ? $nbre_page : 1;
 
     return [
-      '#theme' => 'admin_status_list',
-      "#items" => $status,
-      "#total_item" => count($status),
-      "#total_row" => $total_status,
+      '#theme' => 'admin_airport_list',
+      "#items" => $airport,
+      "#total_item" => count($airport),
+      "#total_row" => $total_airport,
       "#page" => $page,
       "#limit" => $limit,
       "#nbre_page" => $nbre_page,
@@ -66,11 +66,11 @@ class StatusController extends ControllerBase
   }
 
   public function view($id) {
-      $status = $this->entityCRUDService->findById($id, $this->tables);
+      $airport = $this->entityCRUDService->findById($id, $this->tables);
 
       return [
-        '#theme' =>  'admin_status_view',
-        "#status" => $status
+        '#theme' =>  'admin_airport_view',
+        "#airport" => $airport
       ];
   }
 
@@ -90,7 +90,7 @@ class StatusController extends ControllerBase
         \Drupal::messenger()->addMessage($this->t('Erreur lors de la suppression.'));
       }
     }
-    return $this->redirect('vols.status_vols');
+    return $this->redirect('vols.airport_list');
   }
 
 }

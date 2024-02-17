@@ -1,4 +1,5 @@
 <?php
+
 namespace Drupal\vols\Entity;
 
 
@@ -22,12 +23,14 @@ use Drupal\Core\Field\BaseFieldDefinition;
  *   },
  * )
  */
-class VolEntity extends ContentEntityBase implements ContentEntityInterface {
+class VolEntity extends ContentEntityBase implements ContentEntityInterface
+{
   /**
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type
-  ) {
+  )
+  {
     $fields = [];
 
     $fields['id'] = BaseFieldDefinition::create('integer')
@@ -143,18 +146,25 @@ class VolEntity extends ContentEntityBase implements ContentEntityInterface {
       ->setSetting('max_length', 190);
 
 
-    $fields['codeshares'] = BaseFieldDefinition::create('string')
+    $fields['codeshares'] = BaseFieldDefinition::create('text_long')
       ->setLabel(t("codeshares"))
       ->setRequired(FALSE)
-      ->setDescription("codeshares")
-      ->setSetting('max_length', 190);
+      ->setDescription("codeshares");
 
 
-    $fields['codeShare'] = BaseFieldDefinition::create('string')
+    $fields['codeShare'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t("codeShare"))
       ->setRequired(FALSE)
       ->setDescription("codeShare")
-      ->setSetting('max_length', 190);
+      ->setDefaultValue(FALSE);
+
+
+    $fields['user_update'] = BaseFieldDefinition::create('boolean')
+      ->setLabel(t("Mis à jour manuellement"))
+      ->setRequired(FALSE)
+      ->setDescription("Si cocher c'est qu'un utilisateur à déjà effectué une mise à jour.
+      Decocher la case si vous voulez une mise à jour automatique depuis l'API")
+      ->setDefaultValue(FALSE);
 
 
     $fields['type'] = BaseFieldDefinition::create('string')
@@ -165,42 +175,65 @@ class VolEntity extends ContentEntityBase implements ContentEntityInterface {
 
     //date
     $fields['scheduledArrivalTime'] = BaseFieldDefinition::create('datetime')
+      ->setSetting('datetime_type', 'datetime')
+      ->setDisplayConfigurable('form', TRUE)
       ->setLabel(t("Date d'arrivée prévue"))
       ->setRequired(FALSE)
       ->setDescription("scheduled Arrival Time");
 
     $fields['localisedScheduledArrivalTime'] = BaseFieldDefinition::create('datetime')
+      ->setSetting('datetime_type', 'datetime')
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE)
       ->setLabel(t("localised Scheduled Arrival Time"))
       ->setRequired(FALSE)
       ->setDescription("localisedScheduledArrivalTime");
 
     $fields['estimatedArrivalTime'] = BaseFieldDefinition::create('datetime')
+      ->setSetting('datetime_type', 'datetime')
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE)
       ->setLabel(t("Date d'arrivé estimé"))
       ->setRequired(FALSE)
       ->setDescription("estimated Arrival Time");
 
     $fields['localisedEstimatedArrivalTime'] = BaseFieldDefinition::create('datetime')
+      ->setSetting('datetime_type', 'datetime')
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE)
       ->setLabel(t("localised Estimated Arrival Time"))
       ->setRequired(FALSE)
       ->setDescription("localisedEstimatedArrivalTime");
 
     //date depart
     $fields['scheduledDepartureTime'] = BaseFieldDefinition::create('datetime')
+      ->setSetting('datetime_type', 'datetime')
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE)
       ->setLabel(t("Date de départ prévu"))
       ->setRequired(FALSE)
       ->setDescription("scheduled Departure Time");
 
     $fields['localisedScheduledDepartureTime'] = BaseFieldDefinition::create('datetime')
+      ->setSetting('datetime_type', 'datetime')
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE)
       ->setLabel(t("localised Scheduled Departure Time"))
       ->setRequired(FALSE)
       ->setDescription("localisedScheduledDepartureTime");
 
     $fields['estimatedDepartureTime'] = BaseFieldDefinition::create('datetime')
+      ->setSetting('datetime_type', 'datetime')
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE)
       ->setLabel(t("Date départ estimé"))
       ->setRequired(FALSE)
       ->setDescription("estimated Departure Time");
 
     $fields['localisedEstimatedDepartureTime'] = BaseFieldDefinition::create('datetime')
+      ->setSetting('datetime_type', 'datetime')
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayConfigurable('form', TRUE)
       ->setLabel(t("localised Estimated Departure Time"))
       ->setRequired(FALSE)
       ->setDescription("localisedEstimatedDepartureTime");
@@ -220,13 +253,13 @@ class VolEntity extends ContentEntityBase implements ContentEntityInterface {
     //relationship
     //comapanie
     $fields['company'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t("Code de la compagnie"))
-      ->setDescription(t("Code d'identification de la compagnie"))
+      ->setLabel(t("Compagnie"))
+      ->setDescription(t("Compagnie"))
       ->setSetting('target_type', 'company')
       ->setRequired(TRUE);
 
     // Ajouter une contrainte de clé étrangère.
-    $fields['company']->addConstraint('ForeignKey');
+//    $fields['company']->addConstraint('ForeignKey');
 
 
     //aeroport de depart
@@ -237,7 +270,7 @@ class VolEntity extends ContentEntityBase implements ContentEntityInterface {
       ->setRequired(TRUE);
 
     // Ajouter une contrainte de clé étrangère.
-    $fields['airport_departure']->addConstraint('ForeignKey');
+//    $fields['airport_departure']->addConstraint('ForeignKey');
 
 
     //aeroport dùarrivée
@@ -248,7 +281,7 @@ class VolEntity extends ContentEntityBase implements ContentEntityInterface {
       ->setRequired(TRUE);
 
     // Ajouter une contrainte de clé étrangère.
-    $fields['airport_arrival']->addConstraint('ForeignKey');
+//    $fields['airport_arrival']->addConstraint('ForeignKey');
 
 
     //Status
@@ -259,7 +292,7 @@ class VolEntity extends ContentEntityBase implements ContentEntityInterface {
       ->setRequired(TRUE);
 
     // Ajouter une contrainte de clé étrangère.
-    $fields['status']->addConstraint('ForeignKey');
+//    $fields['status']->addConstraint('ForeignKey');
 
     return $fields;
   }

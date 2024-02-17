@@ -14,14 +14,7 @@ vols.list_arrival:
   requirements:
     _permission: "access content"
 
-vols.settings:
-  path: '/admin/vols/list'
-  defaults:
-    _controller: '\Drupal\vols\Controller\Admin\AdminVolsController::list'
-    _title: "Paramètres des vols"
-  requirements:
-    _permission: "administer vols"
-
+#STATUS VOLS
 vols.status_vols:
   path: '/admin/vols/status/list'
   defaults:
@@ -30,10 +23,168 @@ vols.status_vols:
   requirements:
     _permission: "administer vols"
 
-vols.status_vols_form:
-  path: '/admin/vols/status/form'
+vols.view_status_vols_form:
+  path: '/admin/vols/status/{id}/view'
   defaults:
-    _form: '\Drupal\vols\Form\StatusCreateUpdateForm'
-    _title: 'Ajouter/Modifier un status'
+    _controller: '\Drupal\vols\Controller\Admin\StatusController::view'
+    _title: "Statut de vol"
   requirements:
     _permission: 'administer vols'
+
+vols.create_status_vols_form:
+  path: '/admin/vols/status/{entity_id}/{entity_list}/form'
+  defaults:
+    _form: '\Drupal\vols\Form\CreateUpdateForm'
+    _title: 'Ajouter un status'
+  requirements:
+    _permission: 'administer vols'
+
+vols.update_status_vols_form:
+  path: '/admin/vols/status/{id}/{entity_id}/{entity_list}/update'
+  defaults:
+    _form: '\Drupal\vols\Form\CreateUpdateForm'
+    _title: 'Modifier un status'
+  requirements:
+    _permission: 'administer vols'
+
+vols.delete_status_vols_form:
+  path: '/admin/vols/status/{id}/delete'
+  defaults:
+    _controller: '\Drupal\vols\Controller\Admin\StatusController::delete'
+    _title: "Effacer un statut de vol"
+  requirements:
+    _permission: 'administer vols'
+
+
+
+#AEROPORT
+vols.airport_list:
+  path: '/admin/vols/airports/list'
+  defaults:
+    _controller: '\Drupal\vols\Controller\Admin\AirportController::list'
+    _title: "Aeroports"
+  requirements:
+    _permission: "administer vols"
+
+vols.view_airport_form:
+  path: '/admin/vols/airports/{id}/view'
+  defaults:
+    _controller: '\Drupal\vols\Controller\Admin\AirportController::view'
+    _title: "Aeroport"
+  requirements:
+    _permission: 'administer vols'
+
+vols.create_airport_form:
+  path: '/admin/vols/airports/{entity_id}/{entity_list}/form'
+  defaults:
+    _form: '\Drupal\vols\Form\CreateUpdateForm'
+    _title: 'Ajouter un aeroport'
+  requirements:
+    _permission: 'administer vols'
+
+vols.update_airport_form:
+  path: '/admin/vols/airports/{id}/{entity_id}/{entity_list}/update'
+  defaults:
+    _form: '\Drupal\vols\Form\CreateUpdateForm'
+    _title: 'Modifier un aeroport'
+  requirements:
+    _permission: 'administer vols'
+
+vols.delete_airport_form:
+  path: '/admin/vols/airports/{id}/delete'
+  defaults:
+    _controller: '\Drupal\vols\Controller\Admin\AirportController::delete'
+    _title: "Effacer un aeroport"
+  requirements:
+    _permission: 'administer vols'
+
+#END AEROPORT
+
+
+#COMPANY
+vols.company_list:
+  path: '/admin/vols/company/list'
+  defaults:
+    _controller: '\Drupal\vols\Controller\Admin\CompanyController::list'
+    _title: "Compagnies"
+  requirements:
+    _permission: "administer vols"
+
+vols.view_company_form:
+  path: '/admin/vols/companys/{id}/view'
+  defaults:
+    _controller: '\Drupal\vols\Controller\Admin\CompanyController::view'
+    _title: "Compagnie"
+  requirements:
+    _permission: 'administer vols'
+
+vols.create_company_form:
+  path: '/admin/vols/companys/{entity_id}/{entity_list}/form'
+  defaults:
+    _form: '\Drupal\vols\Form\CreateUpdateForm'
+    _title: 'Ajouter un compagnie'
+  requirements:
+    _permission: 'administer vols'
+
+vols.update_company_form:
+  path: '/admin/vols/companys/{id}/{entity_id}/{entity_list}/update'
+  defaults:
+    _form: '\Drupal\vols\Form\CreateUpdateForm'
+    _title: 'Modifier un compagnie'
+  requirements:
+    _permission: 'administer vols'
+
+vols.delete_company_form:
+  path: '/admin/vols/companys/{id}/delete'
+  defaults:
+    _controller: '\Drupal\vols\Controller\Admin\CompanyController::delete'
+    _title: "Effacer un compagnie"
+  requirements:
+    _permission: 'administer vols'
+
+#END COMPANY
+
+
+#VOLS
+vols.vol_list:
+  path: '/admin/vols/vol/list'
+  defaults:
+    _controller: '\Drupal\vols\Controller\Admin\AdminVolsController::list'
+    _title: "Vols"
+  requirements:
+    _permission: "administer vols"
+
+vols.view_vol_form:
+  path: '/admin/vols/vols/{id}/view'
+  defaults:
+    _controller: '\Drupal\vols\Controller\Admin\AdminVolsController::view'
+    _title: "Vol"
+  requirements:
+    _permission: 'administer vols'
+
+vols.create_vol_form:
+  path: '/admin/vols/vols/{entity_id}/{entity_list}/form'
+  defaults:
+    _form: '\Drupal\vols\Form\CreateUpdateForm'
+    _title: 'Ajouter un vol'
+  requirements:
+    _permission: 'administer vols'
+
+vols.update_vol_form:
+  path: '/admin/vols/vols/{id}/{entity_id}/{entity_list}/update'
+  defaults:
+    _form: '\Drupal\vols\Form\CreateUpdateForm'
+    _title: 'Modifier un vol'
+  requirements:
+    _permission: 'administer vols'
+
+vols.delete_vol_form:
+  path: '/admin/vols/vols/{id}/delete'
+  defaults:
+    _controller: '\Drupal\vols\Controller\Admin\AdminVolsController::delete'
+    _title: "Effacer un vol"
+  requirements:
+    _permission: 'administer vols'
+
+#END VOLS
+

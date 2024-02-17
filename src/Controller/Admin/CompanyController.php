@@ -11,16 +11,16 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
 
-class StatusController extends ControllerBase
+class CompanyController extends ControllerBase
 {
 
   protected $entityCRUDService;
 
   protected $killSwitch;
 
-  protected $tables = "status_vols";
+  protected $tables = "companies";
 
-  protected $entity_type_id = "status";
+  protected $entity_type_id = "company";
 
   public function __construct(EntityCRUDService $entityCRUDService, KillSwitch $kill_switch){
     $this->entityCRUDService = $entityCRUDService;
@@ -46,19 +46,19 @@ class StatusController extends ControllerBase
     $start = ($page == 1) ? 0 : $limit;
     $limit = $start + $limit;
 
-    $status = $this->entityCRUDService->getEntities($this->tables, $start, $limit);
+    $company = $this->entityCRUDService->getEntities($this->tables, $start, $limit);
 
-    $total_status = $this->entityCRUDService->countEntities($this->entity_type_id);
+    $total_company = $this->entityCRUDService->countEntities($this->entity_type_id);
 
-    $nbre_page = floor($total_status/$old_limit);
+    $nbre_page = floor($total_company/$old_limit);
 
     $nbre_page = ($nbre_page > 0 ) ? $nbre_page : 1;
 
     return [
-      '#theme' => 'admin_status_list',
-      "#items" => $status,
-      "#total_item" => count($status),
-      "#total_row" => $total_status,
+      '#theme' => 'admin_company_list',
+      "#items" => $company,
+      "#total_item" => count($company),
+      "#total_row" => $total_company,
       "#page" => $page,
       "#limit" => $limit,
       "#nbre_page" => $nbre_page,
@@ -66,11 +66,11 @@ class StatusController extends ControllerBase
   }
 
   public function view($id) {
-      $status = $this->entityCRUDService->findById($id, $this->tables);
+      $company = $this->entityCRUDService->findById($id, $this->tables);
 
       return [
-        '#theme' =>  'admin_status_view',
-        "#status" => $status
+        '#theme' =>  'admin_company_view',
+        "#company" => $company
       ];
   }
 
@@ -90,7 +90,7 @@ class StatusController extends ControllerBase
         \Drupal::messenger()->addMessage($this->t('Erreur lors de la suppression.'));
       }
     }
-    return $this->redirect('vols.status_vols');
+    return $this->redirect('vols.company_list');
   }
 
 }
