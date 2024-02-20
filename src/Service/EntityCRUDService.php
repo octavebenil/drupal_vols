@@ -154,8 +154,8 @@ class EntityCRUDService {
 
     $query->range($page, $limit);
 
-    $query->orderBy("scheduledArrivalTime", "ASC");
-    $query->orderBy("scheduledDepartureTime", "ASC");
+    $query->orderBy("scheduledArrivalTime", "DESC");
+    $query->orderBy("scheduledDepartureTime", "DESC");
 
     return $query->execute()->fetchAll();
   }
