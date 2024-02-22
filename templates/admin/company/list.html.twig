@@ -23,7 +23,12 @@
             <tr>
             <td>{{ item.id }}</td>
             <td>{{ item.code }}</td>
-            <td>{{ item.name }}</td>
+            <td>
+              {% if item.photo != NULL %}
+                <img src="{{ item.photo }}" alt="" class="img-fluid" />
+              {% endif %}
+
+              {{ item.name }}</td>
             <td>
               <a href="{{ path("vols.view_company_form", {"id": item.id}  ) }}" class="btn btn-info btn-sm"> Voir</a>
 

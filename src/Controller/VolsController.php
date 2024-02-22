@@ -8,6 +8,7 @@ use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
 use Drupal\vols\Service\EntityCRUDService;
 use Drupal\vols\Service\SkyScannerService;
 use Drupal\vols\Utils\Constant;
+use Drupal\vols\Utils\Helpers;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -74,6 +75,7 @@ class VolsController extends ControllerBase
       "type" => Constant::$DEPARTURE
     ), $start, $limit);
 
+    $vols = Helpers::process_company_photo($vols);
     return [
       '#theme' => 'front_vols_list',
       '#type' => Constant::$DEPARTURE,
@@ -100,6 +102,8 @@ class VolsController extends ControllerBase
     $vols = $this->entityCRUDService->getVolsByProperties("vols", array(
       "type" => Constant::$ARRIVAL
     ), $start, $limit);
+
+    $vols = Helpers::process_company_photo($vols);
 
     return [
       '#theme' => 'front_vols_list',

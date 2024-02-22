@@ -44,6 +44,26 @@ class EntityCRUDService {
 
   }
 
+  public function createOrIgnoreIfExistEntity(array $values, $entity_type_id, $check_colomn) {
+    $check_value = $values[$check_colomn];
+
+
+    $table_name = $this->entityTypeManager->getStorage($entity_type_id)->getEntityType()->getBaseTable();
+
+    $item = $this->findOneByProperty($check_colomn, $check_value, $table_name);
+
+    if($item){
+      //on ignore par ca existe déjà
+    }
+    else
+    {
+      $this->createEntity($values, $entity_type_id);
+    }
+
+    return $this->findOneByProperty($check_colomn, $check_value, $table_name);
+
+  }
+
   public function updateEntity(array $values, $entity_id, $entity_type_id) {
     $entity = $this->entityTypeManager->getStorage($entity_type_id)->load($entity_id);
     if ($entity) {
@@ -139,6 +159,7 @@ class EntityCRUDService {
 
     $query->addField("comp", "code", "comp_code");
     $query->addField("comp", "name", "company");
+    $query->addField("comp", "photo__target_id", "company_photo");
 
     $query->addField("dep_aero", "code", "dep_aero_code");
     $query->addField("dep_aero", "name", "departureAirportName");

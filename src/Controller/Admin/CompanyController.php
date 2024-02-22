@@ -3,6 +3,8 @@
 namespace Drupal\vols\Controller\Admin;
 
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
+use Drupal\Core\Url;
+use Drupal\file\Entity\File;
 use Drupal\vols\Utils\Helpers;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Controller\ControllerBase;
@@ -53,6 +55,25 @@ class CompanyController extends ControllerBase
     $nbre_page = floor($total_company/$old_limit);
 
     $nbre_page = ($nbre_page > 0 ) ? $nbre_page : 1;
+
+    if($company){
+      $old_company = $company;
+      $company=[];
+
+      foreach ($old_company as $vl){
+        $vl->photo = NULL;
+
+        if($vl->photo__target_id != NULL){
+          $file = File::load($vl->photo__target_id);
+
+          if($file){
+            $vl->photo = $file->createFileUrl();
+          }
+        }
+
+        $company[] = $vl;
+      }
+    }
 
     return [
       '#theme' => 'admin_company_list',

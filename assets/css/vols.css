@@ -98,6 +98,15 @@ tr, td{
   border-bottom: 1px solid darkgray;
 }
 
+.img-fluid{
+  width: 2.5%;
+}
+
+.img-front{
+  width: 15%;
+  display: inline;
+  margin-right: 4px;
+}
 
 /*PAGINATE*/
 

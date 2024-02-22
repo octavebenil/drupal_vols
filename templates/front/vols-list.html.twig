@@ -5,21 +5,20 @@
 {% endif %}
 
 <div class="table-responsive">
-  <table class="table table-hover">
+  <table class="table table-hover" style="width: 100%;">
     <thead>
-        <th>N° de vol</th>
+        <th  style="width: 12%;">N° de vol</th>
         <th>Compagnie</th>
-        <th>Jour</th>
-        <th>Horaire</th>
+        <th style="width: 20%;">Jour / Horaire</th>
+{#        <th style="width: 10%;"></th>#}
 
         {% if type == 'departure' %}
-          <th>Destination</th>
+          <th style="width: 20%;">Destination</th>
         {% else %}
-          <th>Provenance</th>
+          <th style="width: 20%;">Provenance</th>
         {% endif %}
 
-        <th>Statut</th>
-        <th></th>
+        <th style="width: 20%;">Statut</th>
     </thead>
 
     <tbody>
@@ -27,51 +26,43 @@
         {% for vol in vols %}
           <tr>
             <td>{{ vol.flightNumber }}</td>
-            <td>{{ vol.company }}</td>
+            <td>
+              {% if vol.photo != NULL %}
+                <img src="{{ vol.photo }}" alt="" class="img-front" />
+              {% endif %}
+              {{ vol.company }}</td>
+
 
             {% if type == 'departure' %}
-
+              <td>
               {% if vol.scheduledDepartureTime == "" %}
-                <td>{{ vol.scheduledDepartureTime}}</td>
+               {{ vol.scheduledDepartureTime}}
               {% else %}
-                <td>{{ vol.scheduledDepartureTime|date('d/m/Y')}}</td>
+               {{ vol.scheduledDepartureTime|date('d/m/Y H:i')}}
               {% endif %}
-
-
-              {% if vol.scheduledDepartureTime == "" %}
-                <td>{{ vol.scheduledDepartureTime}}</td>
-              {% else %}
-                <td>{{ vol.scheduledDepartureTime|date('H:i')}}</td>
-              {% endif %}
+              </td>
 
               <td>{{ vol.arrivalAirportName}}</td>
 
             {% else %}
-
+              <td>
               {% if vol.scheduledArrivalTime == "" %}
-                <td>{{ vol.scheduledArrivalTime}}</td>
+               {{ vol.scheduledArrivalTime}}
               {% else %}
-                <td>{{ vol.scheduledArrivalTime|date('d/m/Y')}}</td>
+               {{ vol.scheduledArrivalTime|date('d/m/Y H:i')}}
               {% endif %}
-
-
-              {% if vol.scheduledArrivalTime == "" %}
-                <td>{{ vol.scheduledArrivalTime}}</td>
-              {% else %}
-                <td>{{ vol.scheduledArrivalTime|date('H:i')}}</td>
-              {% endif %}
+              </td>
 
               <td>{{ vol.departureAirportName}}</td>
 
             {% endif %}
 
 
-            <td>{{ vol.status}}</td>
-            <td></td>
+            <td style="text-transform: uppercase;">{{ vol.status}}</td>
           </tr>
         {% endfor %}
       {% else %}
-        <td colspan="7">Tous les vols ont été achevés pour aujourd'hui.</td>
+        <td colspan="8">Tous les vols ont été achevés pour aujourd'hui.</td>
       {% endif %}
     </tbody>
   </table>

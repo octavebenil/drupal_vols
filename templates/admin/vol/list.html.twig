@@ -8,7 +8,7 @@
 </div>
 
 <div class="table-responsive">
-  <table class="table table-hover">
+  <table class="table table-hover" style="width: 100%;">
     <thead>
         <th>#</th>
         <th>N° de vol</th>
@@ -29,7 +29,11 @@
           <tr>
             <td>{{ vol.id }}</td>
             <td>{{ vol.flightNumber }}</td>
-            <td>{{ vol.company }}</td>
+            <td>
+              {% if vol.photo != NULL %}
+                <img src="{{ vol.photo }}" alt="" class="img-front" />
+              {% endif %}
+              {{ vol.company }}</td>
 
             {% if type == 'departure' %}
 

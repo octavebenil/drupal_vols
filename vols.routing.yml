@@ -21,7 +21,7 @@ vols.status_vols:
     _controller: '\Drupal\vols\Controller\Admin\StatusController::list'
     _title: "Statuts des vols"
   requirements:
-    _permission: "administer vols"
+    _permission: "administer vols access content"
 
 vols.view_status_vols_form:
   path: '/admin/vols/status/{id}/view'
@@ -29,7 +29,7 @@ vols.view_status_vols_form:
     _controller: '\Drupal\vols\Controller\Admin\StatusController::view'
     _title: "Statut de vol"
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 vols.create_status_vols_form:
   path: '/admin/vols/status/{entity_id}/{entity_list}/form'
@@ -37,7 +37,7 @@ vols.create_status_vols_form:
     _form: '\Drupal\vols\Form\CreateUpdateForm'
     _title: 'Ajouter un status'
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 vols.update_status_vols_form:
   path: '/admin/vols/status/{id}/{entity_id}/{entity_list}/update'
@@ -45,7 +45,7 @@ vols.update_status_vols_form:
     _form: '\Drupal\vols\Form\CreateUpdateForm'
     _title: 'Modifier un status'
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 vols.delete_status_vols_form:
   path: '/admin/vols/status/{id}/delete'
@@ -53,7 +53,7 @@ vols.delete_status_vols_form:
     _controller: '\Drupal\vols\Controller\Admin\StatusController::delete'
     _title: "Effacer un statut de vol"
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 
 
@@ -64,7 +64,7 @@ vols.airport_list:
     _controller: '\Drupal\vols\Controller\Admin\AirportController::list'
     _title: "Aeroports"
   requirements:
-    _permission: "administer vols"
+    _permission: "administer vols access content"
 
 vols.view_airport_form:
   path: '/admin/vols/airports/{id}/view'
@@ -72,7 +72,7 @@ vols.view_airport_form:
     _controller: '\Drupal\vols\Controller\Admin\AirportController::view'
     _title: "Aeroport"
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 vols.create_airport_form:
   path: '/admin/vols/airports/{entity_id}/{entity_list}/form'
@@ -80,7 +80,7 @@ vols.create_airport_form:
     _form: '\Drupal\vols\Form\CreateUpdateForm'
     _title: 'Ajouter un aeroport'
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 vols.update_airport_form:
   path: '/admin/vols/airports/{id}/{entity_id}/{entity_list}/update'
@@ -88,7 +88,7 @@ vols.update_airport_form:
     _form: '\Drupal\vols\Form\CreateUpdateForm'
     _title: 'Modifier un aeroport'
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 vols.delete_airport_form:
   path: '/admin/vols/airports/{id}/delete'
@@ -96,7 +96,7 @@ vols.delete_airport_form:
     _controller: '\Drupal\vols\Controller\Admin\AirportController::delete'
     _title: "Effacer un aeroport"
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 #END AEROPORT
 
@@ -108,7 +108,7 @@ vols.company_list:
     _controller: '\Drupal\vols\Controller\Admin\CompanyController::list'
     _title: "Compagnies"
   requirements:
-    _permission: "administer vols"
+    _permission: "administer vols access content"
 
 vols.view_company_form:
   path: '/admin/vols/companys/{id}/view'
@@ -116,7 +116,7 @@ vols.view_company_form:
     _controller: '\Drupal\vols\Controller\Admin\CompanyController::view'
     _title: "Compagnie"
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 vols.create_company_form:
   path: '/admin/vols/companys/{entity_id}/{entity_list}/form'
@@ -124,7 +124,7 @@ vols.create_company_form:
     _form: '\Drupal\vols\Form\CreateUpdateForm'
     _title: 'Ajouter un compagnie'
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 vols.update_company_form:
   path: '/admin/vols/companys/{id}/{entity_id}/{entity_list}/update'
@@ -132,7 +132,7 @@ vols.update_company_form:
     _form: '\Drupal\vols\Form\CreateUpdateForm'
     _title: 'Modifier un compagnie'
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 vols.delete_company_form:
   path: '/admin/vols/companys/{id}/delete'
@@ -140,7 +140,7 @@ vols.delete_company_form:
     _controller: '\Drupal\vols\Controller\Admin\CompanyController::delete'
     _title: "Effacer un compagnie"
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 #END COMPANY
 
@@ -152,7 +152,7 @@ vols.vol_list:
     _controller: '\Drupal\vols\Controller\Admin\AdminVolsController::list'
     _title: "Vols"
   requirements:
-    _permission: "administer vols"
+    _permission: "administer vols access content"
 
 vols.view_vol_form:
   path: '/admin/vols/vols/{id}/view'
@@ -160,7 +160,7 @@ vols.view_vol_form:
     _controller: '\Drupal\vols\Controller\Admin\AdminVolsController::view'
     _title: "Vol"
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 vols.create_vol_form:
   path: '/admin/vols/vols/{entity_id}/{entity_list}/form'
@@ -168,7 +168,7 @@ vols.create_vol_form:
     _form: '\Drupal\vols\Form\CreateUpdateForm'
     _title: 'Ajouter un vol'
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 vols.update_vol_form:
   path: '/admin/vols/vols/{id}/{entity_id}/{entity_list}/update'
@@ -176,7 +176,7 @@ vols.update_vol_form:
     _form: '\Drupal\vols\Form\CreateUpdateForm'
     _title: 'Modifier un vol'
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 vols.delete_vol_form:
   path: '/admin/vols/vols/{id}/delete'
@@ -184,7 +184,7 @@ vols.delete_vol_form:
     _controller: '\Drupal\vols\Controller\Admin\AdminVolsController::delete'
     _title: "Effacer un vol"
   requirements:
-    _permission: 'administer vols'
+    _permission: 'administer vols access content'
 
 #END VOLS
 

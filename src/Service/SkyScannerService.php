@@ -144,13 +144,13 @@ class SkyScannerService
           $status_values = $vol["status"];
 
 
-          $company = $this->entityCRUDService->createUpdateEntity($company_values, "company", "code");
+          $company = $this->entityCRUDService->createOrIgnoreIfExistEntity($company_values, "company", "code");
 
-          $airport_arrival = $this->entityCRUDService->createUpdateEntity($airport_arrival_values, "airport", "code");
+          $airport_arrival = $this->entityCRUDService->createOrIgnoreIfExistEntity($airport_arrival_values, "airport", "code");
 
-          $airport_departure = $this->entityCRUDService->createUpdateEntity($airport_departure_values, "airport", "code");
+          $airport_departure = $this->entityCRUDService->createOrIgnoreIfExistEntity($airport_departure_values, "airport", "code");
 
-          $status = $this->entityCRUDService->createUpdateEntity($status_values, "status", "code");
+          $status = $this->entityCRUDService->createOrIgnoreIfExistEntity($status_values, "status", "code");
 
 
           if($company){

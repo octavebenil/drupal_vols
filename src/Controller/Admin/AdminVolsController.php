@@ -57,6 +57,7 @@ class AdminVolsController extends ControllerBase
 
     $nbre_page = ($nbre_page > 0) ? $nbre_page : 1;
 
+    $vol = Helpers::process_company_photo($vol);
 
     return [
       '#theme' => 'admin_vol_list',

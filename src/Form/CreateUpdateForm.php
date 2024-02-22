@@ -6,6 +6,7 @@ use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\file\Entity\File;
 use Drupal\vols\Service\EntityCRUDService;
 use Drupal\vols\Utils\Constant;
 use Drupal\vols\Utils\Helpers;
@@ -121,16 +122,40 @@ class CreateUpdateForm extends FormBase
       }
       else{
 
+        if($id != NULL){
+          //on ignore le code
+          if($field_name == "code") continue;
+        }
+
         if($field_name == "user_update"){
           $default_value = 1;
         }
 
-        $form[$field_name] = [
-          '#type' => $field_type,
-          '#title' => $this->t($title),
-          '#description' => $this->t($description),
-          '#default_value' => $default_value
-        ];
+        if($field_type == "file"){
+
+          $validators = array(
+            'file_validate_extensions' => array('jpg', 'jpeg', 'png'),
+          );
+
+          $form[$field_name] = [
+            '#type' => 'file',
+            '#title' => $this->t($title),
+            '#description' => $this->t("Format image seulement : jpg, jpeg ou png"),
+            "#multiple" => True,
+//            '#default_value' => $default_value,
+//            '#upload_validators' => $validators,
+            '#size' => 520,
+//            '#upload_location' => 'public://companies/',
+          ];
+        }
+        else{
+          $form[$field_name] = [
+            '#type' => $field_type,
+            '#title' => $this->t($title),
+            '#description' => $this->t($description),
+            '#default_value' => $default_value
+          ];
+        }
       }
 
     }
@@ -181,15 +206,26 @@ class CreateUpdateForm extends FormBase
 
     //on desactive validation de tous ce qui est fichier
     //@TODO faire la validation des fichiers
-    unset($values["photo"]);
-    unset($values["file"]);
-    unset($values["files"]);
+//    unset($values["photo"]);
+//    unset($values["file"]);
+//    unset($values["files"]);
     unset($values["ForeignKey"]);
 
     $values_to_validates = $values;
 
     unset($values_to_validates["entity_type_id"]);
     unset($values_to_validates["entity_list"]);
+
+    unset($values_to_validates["photo"]);
+    unset($values_to_validates["file"]);
+    unset($values_to_validates["files"]);
+
+    if($values['id'] > 0){
+      //mise à jour, on ignore le code
+      //on met un code au hasard
+      //code temp
+      $values_to_validates["code"] = "EDI-CODE";
+    }
 
     //@TODO Pour cause d'erreur on ignore la validation de type datetime
     $entity = $this->entityTypeManager->getStorage($values["entity_type_id"])->create();
@@ -231,15 +267,66 @@ class CreateUpdateForm extends FormBase
 
     $entity_id = isset($values["id"]) ? $values["id"] : 0;
 
+    $entity = $this->entityTypeManager->getStorage($this->entity_type_id)->create();
+
+    $fields = $entity->getFieldDefinitions();
+
+
+
+    foreach ($fields as $field_name => $field_definition) {
+
+      $field_type = Constant::getFieldFromEntityType($field_definition->getType());
+
+      if($field_type == "file"){
+
+        $photo__target_id = NULL;
+        $photo__display = NULL;
+        $photo__description = NULL;
+
+        $has_file = false;
+
+        // Récupérer le fichier téléchargé depuis le formulaire.
+        $file = $form_state->getValue($field_name);
+
+        if (!empty($file)) {
+          $uploaded_file = $file[0];
+
+          // Déplacer le fichier téléchargé vers le répertoire public:// de Drupal.
+          $destination = 'public://uploads/';
+          $filename = $uploaded_file->getClientOriginalName();
+          $file_uri = $uploaded_file->move($destination, $filename);
+
+          // Créer une entité de fichier dans Drupal.
+          $file_entity = File::create([
+            'uri' => $file_uri,
+          ]);
+          $file_entity->save();
+
+          $has_file = true;
+
+          $photo__target_id = $file_entity->id();
+          $photo__display = $file_entity->getFilename();
+
+//          unset($values[$field_name]);
+          $values[$field_name] =  $photo__target_id;
+
+          $values[$field_name."__target_id"] = $photo__target_id;
+          $values[$field_name."__display"] = $photo__display;
+          $values[$field_name."__description"] = $photo__description;
+        }
+
+      }
+
+
+    }
+
+
+
     if($entity_id > 0){
       //mise à jour
       $vals = [];
 
       $entityUpdate = $this->entityTypeManager->getStorage($this->entity_type_id)->load($entity_id);
-
-      $entity = $this->entityTypeManager->getStorage($this->entity_type_id)->create();
-
-      $fields = $entity->getFieldDefinitions();
 
       foreach ($fields as $field_name => $field_definition) {
 
