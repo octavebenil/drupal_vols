@@ -71,8 +71,11 @@ class VolsController extends ControllerBase
 
     $this->skyScannerService->syncVolEntity($iata, Constant::$DEPARTURE);
 
+    $today = date("Y-m-d", time());
+
     $vols = $this->entityCRUDService->getVolsByProperties("vols", array(
-      "type" => Constant::$DEPARTURE
+      "type" => Constant::$DEPARTURE,
+      "scheduledDepartureTime" => $today,
     ), $start, $limit);
 
     $vols = Helpers::process_company_photo($vols);
@@ -99,8 +102,11 @@ class VolsController extends ControllerBase
 
     $this->skyScannerService->syncVolEntity($iata, Constant::$ARRIVAL);
 
+    $today = date("Y-m-d", time());
+
     $vols = $this->entityCRUDService->getVolsByProperties("vols", array(
-      "type" => Constant::$ARRIVAL
+      "type" => Constant::$ARRIVAL,
+      "scheduledArrivalTime" => $today,
     ), $start, $limit);
 
     $vols = Helpers::process_company_photo($vols);

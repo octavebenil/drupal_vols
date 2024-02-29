@@ -169,7 +169,15 @@ class EntityCRUDService {
 
     if($properties){
       foreach ($properties as $property => $value){
-        $query->where("$property='$value'");
+
+        if($property == "scheduledDepartureTime"
+          or $property == "scheduledArrivalTime"){
+          $query->where("$property LIKE '%$value%'");
+        }
+        else{
+          $query->where("$property='$value'");
+        }
+
       }
     }
 
